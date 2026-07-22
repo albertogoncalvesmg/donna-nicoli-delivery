@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <!-- A tag viewport garante que o site se adapte às telas de celulares (Mobile-First) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Meta tags para SEO (Google) -->
+    <meta name="description" content="Donna Nicoli - O melhor delivery de massas artesanais de Contagem. Clássico, rápido e mineiro. Peça agora!">
+    <title>Donna Nicoli | Autêntica Cantina Italiana em Contagem</title>
+
+    <!-- Importação do Bootstrap 5 via CDN para o layout e responsividade -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Importação do FontAwesome para usarmos ícones (ex: WhatsApp, Instagram) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Link para o nosso arquivo CSS (que faremos na Etapa 2) -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-light">
+
+    <!-- HEADER & NAVEGAÇÃO -->
+    <!-- fixed-top mantém o menu colado no topo ao rolar a página -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top custom-navbar">
+            <div class="container">
+                <a class="navbar-brand fw-bold" href="#">
+                    <i class="fa-solid fa-utensils me-2"></i>Donna NICOLI
+                </a>
+                <!-- Botão menu hamburguer para celular -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item"><a class="nav-link" href="#pratos">Pratos da Casa</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#monte-seu">Monte o Seu</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#avaliacoes">Avaliações</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- HERO SECTION (A Primeira Impressão) -->
+        <section id="hero" class="vh-100 d-flex align-items-center justify-content-center text-center text-white position-relative">
+            <div class="container position-relative z-2">
+                <h1 class="display-3 fw-bold mb-3">Clássico, Rápido e Mineiro</h1>
+                <p class="lead mb-4 fw-light">A experiência da autêntica cantina italiana com a fartura que só Minas Gerais tem, entregue fumegando na sua casa.</p>
+                <a href="#monte-seu" class="btn btn-warning btn-lg fw-bold px-5 py-3 shadow">MONTAR MEU PRATO <i class="fa-solid fa-arrow-down ms-2"></i></a>
+            </div>
+            <!-- Overlay escuro para garantir a leitura do texto sobre a foto de fundo -->
+            <div class="overlay position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-50 z-1"></div>
+        </section>
+
+        <!-- SEÇÃO: PRATOS DA CASA -->
+        <section id="pratos" class="py-5">
+            <div class="container pt-4">
+                <div class="text-center mb-5">
+                    <h2 class="fw-bold">Pratos da Casa</h2>
+                    <p class="text-muted">Nossas receitas de maior sucesso, prontas para viajar até você.</p>
+                </div>
+                
+                <div class="row g-4">
+                    <!-- Card 1 -->
+                    <div class="col-12 col-md-4">
+                        <div class="card h-100 shadow-sm border-0">
+                            <!-- Placeholder de imagem. Na Etapa 2 vamos arrumar as imagens reais -->
+                            <img src="https://via.placeholder.com/400x250" class="card-img-top" alt="Penne Caipira">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title fw-bold">Penne Caipira</h5>
+                                <p class="card-text text-muted small">Massa al dente salteada no alho, com calabresa torradinha e cheiro-verde fresco.</p>
+                                <div class="mt-auto d-flex justify-content-between align-items-center">
+                                    <span class="fs-5 fw-bold text-success">R$ 28,90</span>
+                                    <button class="btn btn-outline-success btn-sm btn-pedir-prato" data-nome="Penne Caipira" data-preco="28.90">Pedir Este</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 2 -->
+                    <div class="col-12 col-md-4">
+                        <div class="card h-100 shadow-sm border-0">
+                            <img src="https://via.placeholder.com/400x250" class="card-img-top" alt="Bolonhesa da Casa">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title fw-bold">Bolonhesa da Casa</h5>
+                                <p class="card-text text-muted small">Nosso ragu de acém com linguiça caipira, cozido lentamente por horas no tomate pelati.</p>
+                                <div class="mt-auto d-flex justify-content-between align-items-center">
+                                    <span class="fs-5 fw-bold text-success">R$ 34,90</span>
+                                    <button class="btn btn-outline-success btn-sm btn-pedir-prato" data-nome="Bolonhesa da Casa" data-preco="34.90">Pedir Este</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="col-12 col-md-4">
+                        <div class="card h-100 shadow-sm border-0">
+                            <img src="https://via.placeholder.com/400x250" class="card-img-top" alt="Cremoso de Frango">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title fw-bold">Cremoso de Frango</h5>
+                                <p class="card-text text-muted small">Molho branco aveludado, frango desfiado e o toque defumado do milho tostado na frigideira.</p>
+                                <div class="mt-auto d-flex justify-content-between align-items-center">
+                                    <span class="fs-5 fw-bold text-success">R$ 32,90</span>
+                                    <button class="btn btn-outline-success btn-sm btn-pedir-prato" data-nome="Cremoso de Frango com Milho" data-preco="32.90">Pedir Este</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO: MONTE O SEU (O Coração da Aplicação) -->
+        <section id="monte-seu" class="py-5 bg-white">
+            <div class="container pt-4">
+                <div class="text-center mb-5">
+                    <h2 class="fw-bold">Monte o Seu Delivery</h2>
+                    <p class="text-muted">Você é o Chef. Escolha sua base, a alma e a fartura do seu prato.</p>
+                </div>
+
+                <form id="form-pedido" class="max-w-md mx-auto" style="max-width: 800px;">
+                    
+                    <!-- Passo 1: Massas -->
+                    <div class="card mb-4 border-0 shadow-sm">
+                        <div class="card-header custom-bg-wood text-white fw-bold">
+                            1. Escolha sua Massa (Obrigatório)
+                        </div>
+                        <div class="card-body">
+                            <div class="form-check mb-2">
+                                <input class="form-check-input input-massa" type="radio" name="massa" id="espaguete" value="Espaguete" data-preco="0" required>
+                                <label class="form-check-label w-100 d-flex justify-content-between" for="espaguete">
+                                    <span>Espaguete</span>
+                                </label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input input-massa" type="radio" name="massa" id="penne" value="Macarrão Penne" data-preco="0">
+                                <label class="form-check-label w-100 d-flex justify-content-between" for="penne">
+                                    <span>Macarrão Penne</span>
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input input-massa" type="radio" name="massa" id="fettuccine" value="Fettuccine" data-preco="0">
+                                <label class="form-check-label w-100 d-flex justify-content-between" for="fettuccine">
+                                    <span>Fettuccine</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Passo 2: Molhos -->
+                    <div class="card mb-4 border-0 shadow-sm">
+                        <div class="card-header custom-bg-wood text-white fw-bold">
+                            2. Escolha seu Molho (Obrigatório)
+                        </div>
+                        <div class="card-body">
+                            <div class="form-check mb-2">
+                                <input class="form-check-input input-molho" type="radio" name="molho" id="sugo" value="Sugo Rústico" data-preco="25.00" required>
+                                <label class="form-check-label w-100 d-flex justify-content-between" for="sugo">
+                                    <span>Rústico a Sugo</span> <span>R$ 25,00</span>
+                                </label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input input-molho" type="radio" name="molho" id="alho-oleo" value="Alho e Óleo" data-preco="22.00">
+                                <label class="form-check-label w-100 d-flex justify-content-between" for="alho-oleo">
+                                    <span>Alho e Óleo</span> <span>R$ 22,00</span>
+                                </label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input input-molho" type="radio" name="molho" id="bolonhesa" value="Bolonhesa" data-preco="30.00">
+                                <label class="form-check-label w-100 d-flex justify-content-between" for="bolonhesa">
+                                    <span>Bolonhesa da Casa</span> <span>R$ 30,00</span>
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input input-molho" type="radio" name="molho" id="branco" value="Molho Branco Caipira" data-preco="28.00">
+                                <label class="form-check-label w-100 d-flex justify-content-between" for="branco">
+                                    <span>Molho Branco Caipira</span> <span>R$ 28,00</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Passo 3: Adicionais -->
+                    <div class="card mb-5 border-0 shadow-sm">
+                        <div class="card-header custom-bg-wood text-white fw-bold">
+                            3. Itens Adicionais (Turbine sua marmita)
+                        </div>
+                        <div class="card-body">
+                            <!-- Os valores "data-preco" são exemplos, ajustaremos na lógica -->
+                            <div class="form-check mb-2">
+                                <input class="form-check-input input-adicional" type="checkbox" id="add-ovo" value="Ovo Frito (Gema Cremosa)" data-preco="3.50">
+                                <label class="form-check-label w-100 d-flex justify-content-between" for="add-ovo">
+                                    <span>Ovo Frito (Gema Cremosa) 🍳</span> <span>+ R$ 3,50</span>
+                                </label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input input-adicional" type="checkbox" id="add-bacon" value="Bacon Crocante" data-preco="5.00">
+                                <label class="form-check-label w-100 d-flex justify-content-between" for="add-bacon">
+                                    <span>Porção de Bacon Crocante 🥓</span> <span>+ R$ 5,00</span>
+                                </label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input input-adicional" type="checkbox" id="add-parmesao" value="Parmesão Ralado" data-preco="4.00">
+                                <label class="form-check-label w-100 d-flex justify-content-between" for="add-parmesao">
+                                    <span>Queijo Parmesão Ralado 🧀</span> <span>+ R$ 4,00</span>
+                                </label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input input-adicional" type="checkbox" id="add-frango" value="Frango em Cubos" data-preco="6.00">
+                                <label class="form-check-label w-100 d-flex justify-content-between" for="add-frango">
+                                    <span>Frango Grelhado em Cubos 🍗</span> <span>+ R$ 6,00</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- SEÇÃO: PROVA SOCIAL E AVALIAÇÕES -->
+        <section id="avaliacoes" class="py-5 bg-light">
+            <div class="container pt-4 text-center">
+                <h2 class="fw-bold mb-5">Quem provou, aprovou!</h2>
+                <div class="row g-4">
+                    <div class="col-12 col-md-4">
+                        <div class="card h-100 border-0 p-3 bg-white text-center shadow-sm">
+                            <div class="text-warning mb-2">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="fst-italic">"Melhor massa da região. Chegou quentinha e a embalagem é um charme à parte. A bolonhesa desmancha na boca!"</p>
+                            <span class="fw-bold">- Carlos E. (Centro, Contagem)</span>
+                        </div>
+                    </div>
+                    <!-- Mais avaliações podem ser adicionadas aqui no mesmo padrão -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- PAINEL FLUTUANTE DE CARRINHO / CHECKOUT -->
+    <div id="checkout-panel" class="fixed-bottom bg-white shadow-lg border-top py-3 px-4 d-flex justify-content-between align-items-center" style="z-index: 1000;">
+        <div>
+            <span class="text-muted small d-block">Total do Pedido</span>
+            <span class="fs-4 fw-bold text-success" id="valor-total">R$ 0,00</span>
+        </div>
+        <button id="btn-finalizar-whatsapp" class="btn btn-success btn-lg fw-bold rounded-pill">
+            <i class="fa-brands fa-whatsapp me-2"></i> Enviar Pedido
+        </button>
+    </div>
+
+    <!-- BOTÃO FLUTUANTE WHATSAPP (Apenas para contato/dúvidas) -->
+    <a href="https://wa.me/5531991546556" target="_blank" class="btn btn-success rounded-circle shadow-lg position-fixed d-flex align-items-center justify-content-center" style="bottom: 90px; right: 20px; width: 60px; height: 60px; z-index: 999;">
+        <i class="fa-brands fa-whatsapp fs-2"></i>
+    </a>
+
+    <!-- FOOTER -->
+    <footer class="bg-dark text-light py-5 pb-5 mb-5">
+        <div class="container text-center">
+            <h4 class="fw-bold mb-3">Donna NICOLI</h4>
+            <p class="mb-1"><i class="fa-solid fa-clock text-warning me-2"></i>Terça a Domingo | 18h às 23h</p>
+            <p class="mb-3"><i class="fa-solid fa-location-dot text-warning me-2"></i>Rua Vereador David Costa 225, Centro - Contagem MG</p>
+            
+            <a href="https://instagram.com/donnanicoli" target="_blank" class="text-light fs-3 me-3 text-decoration-none">
+                <i class="fa-brands fa-instagram"></i>
+            </a>
+            <p class="mt-4 small text-muted">© 2026 Donna Nicoli. Todos os direitos reservados.</p>
+        </div>
+        <!-- Espaço em branco no rodapé para não ser escondido pelo painel do carrinho -->
+        <div style="height: 80px;"></div>
+    </footer>
+
+    <!-- Importação do JavaScript do Bootstrap 5 (Necessário para o menu hamburguer funcionar) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Link para o nosso arquivo JavaScript (que faremos na Etapa 3) -->
+    <script src="script.js"></script>
+</body>
+</html>
