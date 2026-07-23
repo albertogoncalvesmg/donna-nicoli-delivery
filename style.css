@@ -180,3 +180,15 @@ footer {
 footer h4 {
     color: var(--dourado);
 }
+/* =========================================
+   CORREÇÃO MOBILE (Responsividade)
+   ========================================= */
+@media (max-width: 768px) {
+    #hero {
+        /* Desliga o efeito fixo no celular para evitar o super zoom */
+        background-attachment: scroll; 
+        
+        /* Garante que o centro da foto sempre apareça */
+        background-position: center center; 
+    }
+}
