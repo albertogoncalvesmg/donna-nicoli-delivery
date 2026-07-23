@@ -63,7 +63,7 @@ h1, h2, h3, h4, h5, .navbar-brand {
    ========================================= */
 #hero {
     /* Imagem temporária de massa (pode ser trocada pela sua foto oficial depois) */
-    background-image: url('img/hero-fundo 2.png');
+    background-image: url('img/hero-fundo-donna-nicoli.png');
     background-size: cover;
     background-position: center;
     background-attachment: fixed; /* Efeito Parallax suave */
