@@ -191,3 +191,22 @@ footer h4 {
         background-position: center center !important; 
     }
 }
+
+/* =========================================
+   THUMBNAILS (Fotinhas dos ingredientes)
+   ========================================= */
+.thumb-img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border: 2px solid var(--dourado);
+}
+
+.custom-label-box {
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.form-check-input:checked + .custom-label-box {
+    background-color: rgba(212, 175, 55, 0.1); /* Fundo dourado bem clarinho quando selecionado */
+    border-radius: 8px;
+}
