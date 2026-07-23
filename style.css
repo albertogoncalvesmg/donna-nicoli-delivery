@@ -1,0 +1,182 @@
+/* =========================================
+   IMPORTAÇÃO DE FONTES (Google Fonts)
+   ========================================= */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap');
+
+/* =========================================
+   VARIÁVEIS DE CORES (Identidade Visual)
+   ========================================= */
+:root {
+    --verde-escuro: #0a2e16; /* O verde clássico da sua marca */
+    --dourado: #d4af37;      /* O toque premium */
+    --dourado-hover: #b5952f;
+    --madeira-escura: #2c1a0d; /* Lembra os tampos de mesa da cantina */
+    --branco: #ffffff;
+    --texto-padrao: #333333;
+}
+
+/* =========================================
+   ESTILOS GERAIS
+   ========================================= */
+body {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--texto-padrao);
+    background-color: #fcfcfc !important; /* Um branco levemente mais quente */
+}
+
+h1, h2, h3, h4, h5, .navbar-brand {
+    font-family: 'Playfair Display', serif;
+}
+
+/* =========================================
+   NAVEGAÇÃO (HEADER)
+   ========================================= */
+.custom-navbar {
+    background-color: var(--verde-escuro);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    padding-top: 15px;
+    padding-bottom: 15px;
+    transition: all 0.3s ease;
+}
+
+.navbar-brand {
+    color: var(--dourado) !important;
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+}
+
+.nav-link {
+    color: var(--branco) !important;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    margin-left: 15px;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--dourado) !important;
+}
+
+/* =========================================
+   HERO SECTION (Banner Principal)
+   ========================================= */
+#hero {
+    /* Imagem temporária de massa (pode ser trocada pela sua foto oficial depois) */
+    background-image: url('https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?q=80&w=2000&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Efeito Parallax suave */
+}
+
+#hero h1 {
+    color: var(--dourado);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+}
+
+#hero p {
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+    font-size: 1.2rem;
+}
+
+/* Botão Dourado Personalizado */
+.btn-warning {
+    background-color: var(--dourado);
+    border-color: var(--dourado);
+    color: var(--verde-escuro);
+    border-radius: 50px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.btn-warning:hover {
+    background-color: var(--dourado-hover);
+    border-color: var(--dourado-hover);
+    color: white;
+    transform: translateY(-3px); /* Efeito de flutuar ao passar o mouse */
+}
+
+/* =========================================
+   CARDS DE PRATOS E FORMULÁRIO
+   ========================================= */
+.card {
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+}
+
+/* Fundo imitando madeira nos cabeçalhos do formulário */
+.custom-bg-wood {
+    background-color: var(--madeira-escura);
+    border-bottom: 3px solid var(--dourado);
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    letter-spacing: 0.5px;
+}
+
+/* =========================================
+   CUSTOMIZAÇÃO DE CHECKBOX E RADIO BUTTONS
+   ========================================= */
+/* Sobrescrevendo o azul padrão do Bootstrap para a cor da sua marca */
+.form-check-input:checked {
+    background-color: var(--verde-escuro);
+    border-color: var(--dourado);
+}
+
+.form-check-label {
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.form-check-label:hover {
+    background-color: #f1f1f1;
+}
+
+/* =========================================
+   BOTÕES DE AÇÃO E PAINEL FLUTUANTE
+   ========================================= */
+.btn-success, .btn-outline-success {
+    border-color: var(--verde-escuro);
+}
+
+.btn-success {
+    background-color: var(--verde-escuro);
+}
+
+.btn-success:hover {
+    background-color: #061c0d; /* Um verde ainda mais escuro */
+    border-color: #061c0d;
+}
+
+.btn-outline-success {
+    color: var(--verde-escuro);
+}
+
+.btn-outline-success:hover {
+    background-color: var(--verde-escuro);
+    color: var(--branco);
+}
+
+#checkout-panel {
+    border-top: 4px solid var(--dourado) !important;
+}
+
+/* =========================================
+   RODAPÉ
+   ========================================= */
+footer {
+    background-color: var(--madeira-escura) !important;
+    border-top: 5px solid var(--verde-escuro);
+}
+
+footer h4 {
+    color: var(--dourado);
+}
