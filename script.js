@@ -23,11 +23,17 @@ let totalPedido = 0;
 
 function atualizarValorTotal() {
     totalPedido = 0;
+    
+    // Nova linha: Soma o valor da Massa (R$ 19,90)
+    inputsMassa.forEach(input => { if (input.checked) totalPedido += parseFloat(input.dataset.preco); });
+    
+    // Mantém as somas que já existiam
     inputsMolho.forEach(input => { if (input.checked) totalPedido += parseFloat(input.dataset.preco); });
     inputsAdicional.forEach(input => { if (input.checked) totalPedido += parseFloat(input.dataset.preco); });
     inputsBebida.forEach(input => { if (input.checked) totalPedido += parseFloat(input.dataset.preco); }); 
+    
     spanValorTotal.innerText = totalPedido.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-}
+}}
 
 inputsMassa.forEach(input => input.addEventListener('change', atualizarValorTotal));
 inputsMolho.forEach(input => input.addEventListener('change', atualizarValorTotal));
