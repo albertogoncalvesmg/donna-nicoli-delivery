@@ -24,86 +24,108 @@ let totalPedido = 0;
 function atualizarValorTotal() {
     totalPedido = 0;
     
-    // Nova linha: Soma o valor da Massa (R$ 19,90)
-    inputsMassa.forEach(input => { if (input.checked) totalPedido += parseFloat(input.dataset.preco); });
+    // Soma Massa
+    inputsMassa.forEach(input => { 
+        if (input.checked && input.dataset.preco) {
+            totalPedido += parseFloat(input.dataset.preco); 
+        }
+    });
     
-    // Mantém as somas que já existiam
-    inputsMolho.forEach(input => { if (input.checked) totalPedido += parseFloat(input.dataset.preco); });
-    inputsAdicional.forEach(input => { if (input.checked) totalPedido += parseFloat(input.dataset.preco); });
-    inputsBebida.forEach(input => { if (input.checked) totalPedido += parseFloat(input.dataset.preco); }); 
+    // Soma Molho
+    inputsMolho.forEach(input => { 
+        if (input.checked && input.dataset.preco) {
+            totalPedido += parseFloat(input.dataset.preco); 
+        }
+    });
+    
+    // Soma Adicionais
+    inputsAdicional.forEach(input => { 
+        if (input.checked && input.dataset.preco) {
+            totalPedido += parseFloat(input.dataset.preco); 
+        }
+    });
+    
+    // Soma Bebidas
+    inputsBebida.forEach(input => { 
+        if (input.checked && input.dataset.preco) {
+            totalPedido += parseFloat(input.dataset.preco); 
+        }
+    }); 
     
     spanValorTotal.innerText = totalPedido.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-}}
+}
 
+// Os "ouvintes" que detectam cada clique no site
 inputsMassa.forEach(input => input.addEventListener('change', atualizarValorTotal));
 inputsMolho.forEach(input => input.addEventListener('change', atualizarValorTotal));
 inputsAdicional.forEach(input => input.addEventListener('change', atualizarValorTotal));
 inputsBebida.forEach(input => input.addEventListener('change', atualizarValorTotal)); 
 
 // Função para mostrar/esconder opções de pagamento
-inputsPagamento.forEach(input => {
-    input.addEventListener('change', (evento) => {
-        // Primeiro esconde os dois boxes
-        boxPix.classList.add('d-none');
-        boxTroco.classList.add('d-none');
-        
-        // Depois mostra só o que foi selecionado
-        if (evento.target.value === 'PIX') {
-            boxPix.classList.remove('d-none');
-        } else if (evento.target.value === 'Dinheiro') {
-            boxTroco.classList.remove('d-none');
-        }
+if (inputsPagamento.length > 0) {
+    inputsPagamento.forEach(input => {
+        input.addEventListener('change', (evento) => {
+            if(boxPix) boxPix.classList.add('d-none');
+            if(boxTroco) boxTroco.classList.add('d-none');
+            
+            if (evento.target.value === 'PIX' && boxPix) {
+                boxPix.classList.remove('d-none');
+            } else if (evento.target.value === 'Dinheiro' && boxTroco) {
+                boxTroco.classList.remove('d-none');
+            }
+        });
     });
-});
+}
 
 // ==========================================
 // ENVIO DO PEDIDO: "MONTE O SEU"
 // ==========================================
-btnFinalizar.addEventListener('click', () => {
-    const massaEscolhida = document.querySelector('.input-massa:checked');
-    const molhoEscolhido = document.querySelector('.input-molho:checked');
-    const pagamentoEscolhido = document.querySelector('.input-pagamento:checked');
+if (btnFinalizar) {
+    btnFinalizar.addEventListener('click', () => {
+        const massaEscolhida = document.querySelector('.input-massa:checked');
+        const molhoEscolhido = document.querySelector('.input-molho:checked');
+        const pagamentoEscolhido = document.querySelector('.input-pagamento:checked');
 
-    if (!massaEscolhida || !molhoEscolhido) {
-        alert('Por favor, escolha uma massa e um molho para montar o seu prato!');
-        return; 
-    }
+        if (!massaEscolhida || !molhoEscolhido) {
+            alert('Por favor, escolha uma massa e um molho para montar o seu prato!');
+            return; 
+        }
 
-    if (!pagamentoEscolhido) {
-        alert('Por favor, escolha uma forma de pagamento no final da tela!');
-        return; 
-    }
+        if (!pagamentoEscolhido) {
+            alert('Por favor, escolha uma forma de pagamento no final da tela!');
+            return; 
+        }
 
-    let adicionaisEscolhidos = [];
-    inputsAdicional.forEach(input => { if (input.checked) adicionaisEscolhidos.push(input.value); });
+        let adicionaisEscolhidos = [];
+        inputsAdicional.forEach(input => { if (input.checked) adicionaisEscolhidos.push(input.value); });
 
-    let bebidasEscolhidas = [];
-    inputsBebida.forEach(input => { if (input.checked) bebidasEscolhidas.push(input.value); });
+        let bebidasEscolhidas = [];
+        inputsBebida.forEach(input => { if (input.checked) bebidasEscolhidas.push(input.value); });
 
-    let textoPedido = `Olá! Quero fazer um pedido na *Donna Nicoli* 🍝\n\n`;
-    textoPedido += `*👩‍🍳 MONTE O SEU DELIVERY*\n`;
-    textoPedido += `🍲 *Massa:* ${massaEscolhida.value}\n`;
-    textoPedido += `🍅 *Molho:* ${molhoEscolhido.value}\n`;
+        let textoPedido = `Olá! Quero fazer um pedido na *Donna Nicoli* 🍝\n\n`;
+        textoPedido += `*👩‍🍳 MONTE O SEU DELIVERY*\n`;
+        textoPedido += `🍲 *Massa:* ${massaEscolhida.value}\n`;
+        textoPedido += `🍅 *Molho:* ${molhoEscolhido.value}\n`;
 
-    textoPedido += `🥓 *Adicionais:* ${adicionaisEscolhidos.length > 0 ? adicionaisEscolhidos.join(', ') : 'Nenhum'}\n`;
-    
-    if (bebidasEscolhidas.length > 0) {
-        textoPedido += `🥤 *Bebidas:* ${bebidasEscolhidas.join(', ')}\n`;
-    }
+        textoPedido += `🥓 *Adicionais:* ${adicionaisEscolhidos.length > 0 ? adicionaisEscolhidos.join(', ') : 'Nenhum'}\n`;
+        
+        if (bebidasEscolhidas.length > 0) {
+            textoPedido += `🥤 *Bebidas:* ${bebidasEscolhidas.join(', ')}\n`;
+        }
 
-    textoPedido += `\n💰 *Total do pedido: ${totalPedido.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}*\n`;
-    
-    // Adicionando informações do pagamento na mensagem
-    textoPedido += `💳 *Forma de Pagamento:* ${pagamentoEscolhido.value}\n`;
-    if (pagamentoEscolhido.value === 'Dinheiro' && inputTroco.value.trim() !== '') {
-        textoPedido += `   *(Precisa de troco para R$ ${inputTroco.value})*\n`;
-    }
+        textoPedido += `\n💰 *Total do pedido: ${totalPedido.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}*\n`;
+        
+        textoPedido += `💳 *Forma de Pagamento:* ${pagamentoEscolhido.value}\n`;
+        if (pagamentoEscolhido.value === 'Dinheiro' && inputTroco && inputTroco.value.trim() !== '') {
+            textoPedido += `   *(Precisa de troco para R$ ${inputTroco.value})*\n`;
+        }
 
-    textoPedido += `\nAguardo a confirmação e a taxa de entrega para enviar o comprovante/endereço!`;
+        textoPedido += `\nAguardo a confirmação e a taxa de entrega para enviar o comprovante/endereço!`;
 
-    const textoCodificado = encodeURIComponent(textoPedido);
-    window.open(`https://wa.me/${WHATSAPP_NUMERO}?text=${textoCodificado}`, '_blank');
-});
+        const textoCodificado = encodeURIComponent(textoPedido);
+        window.open(`https://wa.me/${WHATSAPP_NUMERO}?text=${textoCodificado}`, '_blank');
+    });
+}
 
 // ==========================================
 // ENVIO DE PEDIDO RÁPIDO: "PRATOS DA CASA" E "PROMOÇÕES"
