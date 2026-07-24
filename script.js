@@ -10,7 +10,7 @@ const inputsMassa = document.querySelectorAll('.input-massa');
 const inputsMolho = document.querySelectorAll('.input-molho');
 const inputsAdicional = document.querySelectorAll('.input-adicional');
 const inputsBebida = document.querySelectorAll('.input-bebida'); 
-const inputsPrato = document.querySelectorAll('.input-prato'); // Nova linha pros pratos prontos!
+const inputsPrato = document.querySelectorAll('.input-prato'); 
 const spanValorTotal = document.getElementById('valor-total');
 const btnFinalizar = document.getElementById('btn-finalizar-whatsapp');
 
@@ -59,11 +59,48 @@ if (inputsPagamento.length > 0) {
 }
 
 // ==========================================
+// FUNÇÃO: VERIFICAR HORÁRIO DE FUNCIONAMENTO
+// ==========================================
+function restauranteEstaAberto() {
+    const agora = new Date();
+    const diaSemana = agora.getDay(); // 0=Domingo, 1=Segunda, 2=Terça, 3=Quarta, 4=Quinta, 5=Sexta, 6=Sábado
+    const hora = agora.getHours();
+    const minuto = agora.getMinutes();
+
+    // Converte o horário atual para minutos (para facilitar a matemática)
+    const minutosAtuais = (hora * 60) + minuto;
+    
+    // 10:30 = (10 * 60) + 30 = 630 minutos
+    const horarioAbertura = 630; 
+    
+    // 14:00 = 14 * 60 = 840 minutos
+    const horarioFechamento = 840; 
+
+    // Verifica se é um dia de semana útil (Segunda a Sexta)
+    const diaAberto = (diaSemana >= 1 && diaSemana <= 5);
+    
+    // Verifica se a hora atual está dentro da janela de funcionamento
+    const horaAberta = (minutosAtuais >= horarioAbertura && minutosAtuais < horarioFechamento);
+
+    return (diaAberto && horaAberta);
+}
+
+// ==========================================
 // ENVIO DO PEDIDO PARA O WHATSAPP (LIVRE)
 // ==========================================
 if (btnFinalizar) {
     btnFinalizar.addEventListener('click', () => {
         
+        // VALIDAÇÃO 0: Horário de Funcionamento (A MÁGICA ACONTECE AQUI)
+        if (!restauranteEstaAberto()) {
+            const querEnviarFechado = confirm('😴 Ops! O nosso delivery está fechado agora.\n\nNosso horário de funcionamento é de Segunda a Sexta, das 10h30 às 14h.\n\nDeseja enviar sua mensagem no WhatsApp mesmo assim para deixar seu pedido agendado?');
+            
+            // Se o cliente clicar em "Cancelar", ele bloqueia a ação e não envia nada
+            if (!querEnviarFechado) {
+                return; 
+            }
+        }
+
         // Coleta TUDO o que foi marcado na página
         let pratosEscolhidos = [];
         inputsPrato.forEach(input => { if (input.checked) pratosEscolhidos.push(input.value); });
@@ -94,14 +131,12 @@ if (btnFinalizar) {
         // CONSTRUINDO A MENSAGEM INTELIGENTE
         let textoPedido = `Olá! Quero fazer um pedido na *Donna Nicoli* 🍝\n\n`;
 
-        // Só adiciona o bloco de Pratos Prontos se ele escolheu algum
         if (pratosEscolhidos.length > 0) {
             textoPedido += `🍽️ *PRATOS PRONTOS:*\n`;
             pratosEscolhidos.forEach(prato => { textoPedido += `- ${prato}\n`; });
             textoPedido += `\n`;
         }
 
-        // Só adiciona o bloco de Montar o Prato se ele marcou massa, molho ou adicional
         if (massaEscolhida || molhoEscolhido || adicionaisEscolhidos.length > 0) {
             textoPedido += `👩‍🍳 *ITENS DO CARDÁPIO LIVRE:*\n`;
             if (massaEscolhida) textoPedido += `🍲 *Massa:* ${massaEscolhida.value}\n`;
@@ -110,14 +145,12 @@ if (btnFinalizar) {
             textoPedido += `\n`;
         }
         
-        // Só adiciona o bloco de Bebidas se ele escolheu alguma
         if (bebidasEscolhidas.length > 0) {
             textoPedido += `🥤 *BEBIDAS:*\n`;
             bebidasEscolhidas.forEach(bebida => { textoPedido += `- ${bebida}\n`; });
             textoPedido += `\n`;
         }
 
-        // Total e Pagamento
         textoPedido += `💰 *Total do pedido: ${totalPedido.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}*\n`;
         textoPedido += `💳 *Forma de Pagamento:* ${pagamentoEscolhido.value}\n`;
         if (pagamentoEscolhido.value === 'Dinheiro' && inputTroco && inputTroco.value.trim() !== '') {
