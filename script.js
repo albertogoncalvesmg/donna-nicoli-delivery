@@ -59,18 +59,17 @@ if (inputsPagamento.length > 0) {
 }
 
 // ==========================================
-// ENVIO DO PEDIDO PARA O WHATSAPP
+// ENVIO DO PEDIDO PARA O WHATSAPP (LIVRE)
 // ==========================================
 if (btnFinalizar) {
     btnFinalizar.addEventListener('click', () => {
         
-        // Coleta o que foi marcado
+        // Coleta TUDO o que foi marcado na página
         let pratosEscolhidos = [];
         inputsPrato.forEach(input => { if (input.checked) pratosEscolhidos.push(input.value); });
         
         const massaEscolhida = document.querySelector('.input-massa:checked');
         const molhoEscolhido = document.querySelector('.input-molho:checked');
-        const pagamentoEscolhido = document.querySelector('.input-pagamento:checked');
         
         let adicionaisEscolhidos = [];
         inputsAdicional.forEach(input => { if (input.checked) adicionaisEscolhidos.push(input.value); });
@@ -78,49 +77,41 @@ if (btnFinalizar) {
         let bebidasEscolhidas = [];
         inputsBebida.forEach(input => { if (input.checked) bebidasEscolhidas.push(input.value); });
 
-        // Validações Inteligentes
-        const temPratoPronto = pratosEscolhidos.length > 0;
-        const querMonteOSeu = massaEscolhida || molhoEscolhido || adicionaisEscolhidos.length > 0;
-        const temBebida = bebidasEscolhidas.length > 0;
+        const pagamentoEscolhido = document.querySelector('.input-pagamento:checked');
 
-        // 1. Carrinho vazio?
-        if (!temPratoPronto && !querMonteOSeu && !temBebida) {
-            alert('Seu carrinho está vazio! Escolha um prato, monte o seu ou adicione uma bebida.');
+        // VALIDAÇÃO 1: Carrinho Vazio?
+        if (pratosEscolhidos.length === 0 && !massaEscolhida && !molhoEscolhido && adicionaisEscolhidos.length === 0 && bebidasEscolhidas.length === 0) {
+            alert('Seu carrinho está vazio! Escolha algum prato, bebida ou monte sua massa para fazer o pedido.');
             return;
         }
 
-        // 2. Se começou a montar o prato, terminou?
-        if (querMonteOSeu && (!massaEscolhida || !molhoEscolhido)) {
-            alert('Você começou a "Montar o Seu Delivery", mas esqueceu de escolher a Massa ou o Molho!');
-            return;
-        }
-
-        // 3. Escolheu como vai pagar?
+        // VALIDAÇÃO 2: Esqueceu de dizer como vai pagar?
         if (!pagamentoEscolhido) {
             alert('Por favor, escolha uma forma de pagamento no final da tela!');
             return;
         }
 
-        // Construindo a mensagem
+        // CONSTRUINDO A MENSAGEM INTELIGENTE
         let textoPedido = `Olá! Quero fazer um pedido na *Donna Nicoli* 🍝\n\n`;
 
-        // Bloco de Pratos Prontos
-        if (temPratoPronto) {
+        // Só adiciona o bloco de Pratos Prontos se ele escolheu algum
+        if (pratosEscolhidos.length > 0) {
             textoPedido += `🍽️ *PRATOS PRONTOS:*\n`;
             pratosEscolhidos.forEach(prato => { textoPedido += `- ${prato}\n`; });
             textoPedido += `\n`;
         }
 
-        // Bloco do Monte o Seu
-        if (querMonteOSeu) {
-            textoPedido += `👩‍🍳 *MONTE O SEU:*\n`;
-            textoPedido += `🍲 *Massa:* ${massaEscolhida.value}\n`;
-            textoPedido += `🍅 *Molho:* ${molhoEscolhido.value}\n`;
-            textoPedido += `🥓 *Adicionais:* ${adicionaisEscolhidos.length > 0 ? adicionaisEscolhidos.join(', ') : 'Nenhum'}\n\n`;
+        // Só adiciona o bloco de Montar o Prato se ele marcou massa, molho ou adicional
+        if (massaEscolhida || molhoEscolhido || adicionaisEscolhidos.length > 0) {
+            textoPedido += `👩‍🍳 *ITENS DO CARDÁPIO LIVRE:*\n`;
+            if (massaEscolhida) textoPedido += `🍲 *Massa:* ${massaEscolhida.value}\n`;
+            if (molhoEscolhido) textoPedido += `🍅 *Molho:* ${molhoEscolhido.value}\n`;
+            if (adicionaisEscolhidos.length > 0) textoPedido += `🥓 *Adicionais:* ${adicionaisEscolhidos.join(', ')}\n`;
+            textoPedido += `\n`;
         }
         
-        // Bloco de Bebidas
-        if (temBebida) {
+        // Só adiciona o bloco de Bebidas se ele escolheu alguma
+        if (bebidasEscolhidas.length > 0) {
             textoPedido += `🥤 *BEBIDAS:*\n`;
             bebidasEscolhidas.forEach(bebida => { textoPedido += `- ${bebida}\n`; });
             textoPedido += `\n`;
@@ -133,7 +124,7 @@ if (btnFinalizar) {
             textoPedido += `   *(Precisa de troco para R$ ${inputTroco.value})*\n`;
         }
 
-        textoPedido += `\nAguardo a confirmação e a taxa de entrega para enviar o comprovante/endereço!`;
+        textoPedido += `\nAguardo a confirmação e a taxa de entrega para enviar o endereço!`;
 
         const textoCodificado = encodeURIComponent(textoPedido);
         window.open(`https://wa.me/${WHATSAPP_NUMERO}?text=${textoCodificado}`, '_blank');
