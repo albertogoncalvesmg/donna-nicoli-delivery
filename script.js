@@ -10,6 +10,7 @@ const inputsMassa = document.querySelectorAll('.input-massa');
 const inputsMolho = document.querySelectorAll('.input-molho');
 const inputsAdicional = document.querySelectorAll('.input-adicional');
 const inputsBebida = document.querySelectorAll('.input-bebida'); 
+const inputsPrato = document.querySelectorAll('.input-prato'); // Nova linha pros pratos prontos!
 const spanValorTotal = document.getElementById('valor-total');
 const btnFinalizar = document.getElementById('btn-finalizar-whatsapp');
 
@@ -24,44 +25,24 @@ let totalPedido = 0;
 function atualizarValorTotal() {
     totalPedido = 0;
     
-    // Soma Massa
-    inputsMassa.forEach(input => { 
-        if (input.checked && input.dataset.preco) {
-            totalPedido += parseFloat(input.dataset.preco); 
-        }
-    });
-    
-    // Soma Molho
-    inputsMolho.forEach(input => { 
-        if (input.checked && input.dataset.preco) {
-            totalPedido += parseFloat(input.dataset.preco); 
-        }
-    });
-    
-    // Soma Adicionais
-    inputsAdicional.forEach(input => { 
-        if (input.checked && input.dataset.preco) {
-            totalPedido += parseFloat(input.dataset.preco); 
-        }
-    });
-    
-    // Soma Bebidas
-    inputsBebida.forEach(input => { 
-        if (input.checked && input.dataset.preco) {
-            totalPedido += parseFloat(input.dataset.preco); 
-        }
-    }); 
+    // Soma todas as categorias
+    inputsPrato.forEach(input => { if (input.checked && input.dataset.preco) totalPedido += parseFloat(input.dataset.preco); });
+    inputsMassa.forEach(input => { if (input.checked && input.dataset.preco) totalPedido += parseFloat(input.dataset.preco); });
+    inputsMolho.forEach(input => { if (input.checked && input.dataset.preco) totalPedido += parseFloat(input.dataset.preco); });
+    inputsAdicional.forEach(input => { if (input.checked && input.dataset.preco) totalPedido += parseFloat(input.dataset.preco); });
+    inputsBebida.forEach(input => { if (input.checked && input.dataset.preco) totalPedido += parseFloat(input.dataset.preco); }); 
     
     spanValorTotal.innerText = totalPedido.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
 
-// Os "ouvintes" que detectam cada clique no site
+// Ouvintes de clique
+inputsPrato.forEach(input => input.addEventListener('change', atualizarValorTotal));
 inputsMassa.forEach(input => input.addEventListener('change', atualizarValorTotal));
 inputsMolho.forEach(input => input.addEventListener('change', atualizarValorTotal));
 inputsAdicional.forEach(input => input.addEventListener('change', atualizarValorTotal));
 inputsBebida.forEach(input => input.addEventListener('change', atualizarValorTotal)); 
 
-// Função para mostrar/esconder opções de pagamento
+// Função de mostrar/esconder PIX e Troco
 if (inputsPagamento.length > 0) {
     inputsPagamento.forEach(input => {
         input.addEventListener('change', (evento) => {
@@ -78,43 +59,75 @@ if (inputsPagamento.length > 0) {
 }
 
 // ==========================================
-// ENVIO DO PEDIDO: "MONTE O SEU"
+// ENVIO DO PEDIDO PARA O WHATSAPP
 // ==========================================
 if (btnFinalizar) {
     btnFinalizar.addEventListener('click', () => {
+        
+        // Coleta o que foi marcado
+        let pratosEscolhidos = [];
+        inputsPrato.forEach(input => { if (input.checked) pratosEscolhidos.push(input.value); });
+        
         const massaEscolhida = document.querySelector('.input-massa:checked');
         const molhoEscolhido = document.querySelector('.input-molho:checked');
         const pagamentoEscolhido = document.querySelector('.input-pagamento:checked');
-
-        if (!massaEscolhida || !molhoEscolhido) {
-            alert('Por favor, escolha uma massa e um molho para montar o seu prato!');
-            return; 
-        }
-
-        if (!pagamentoEscolhido) {
-            alert('Por favor, escolha uma forma de pagamento no final da tela!');
-            return; 
-        }
-
+        
         let adicionaisEscolhidos = [];
         inputsAdicional.forEach(input => { if (input.checked) adicionaisEscolhidos.push(input.value); });
-
+        
         let bebidasEscolhidas = [];
         inputsBebida.forEach(input => { if (input.checked) bebidasEscolhidas.push(input.value); });
 
-        let textoPedido = `Olá! Quero fazer um pedido na *Donna Nicoli* 🍝\n\n`;
-        textoPedido += `*👩‍🍳 MONTE O SEU DELIVERY*\n`;
-        textoPedido += `🍲 *Massa:* ${massaEscolhida.value}\n`;
-        textoPedido += `🍅 *Molho:* ${molhoEscolhido.value}\n`;
+        // Validações Inteligentes
+        const temPratoPronto = pratosEscolhidos.length > 0;
+        const querMonteOSeu = massaEscolhida || molhoEscolhido || adicionaisEscolhidos.length > 0;
+        const temBebida = bebidasEscolhidas.length > 0;
 
-        textoPedido += `🥓 *Adicionais:* ${adicionaisEscolhidos.length > 0 ? adicionaisEscolhidos.join(', ') : 'Nenhum'}\n`;
-        
-        if (bebidasEscolhidas.length > 0) {
-            textoPedido += `🥤 *Bebidas:* ${bebidasEscolhidas.join(', ')}\n`;
+        // 1. Carrinho vazio?
+        if (!temPratoPronto && !querMonteOSeu && !temBebida) {
+            alert('Seu carrinho está vazio! Escolha um prato, monte o seu ou adicione uma bebida.');
+            return;
         }
 
-        textoPedido += `\n💰 *Total do pedido: ${totalPedido.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}*\n`;
+        // 2. Se começou a montar o prato, terminou?
+        if (querMonteOSeu && (!massaEscolhida || !molhoEscolhido)) {
+            alert('Você começou a "Montar o Seu Delivery", mas esqueceu de escolher a Massa ou o Molho!');
+            return;
+        }
+
+        // 3. Escolheu como vai pagar?
+        if (!pagamentoEscolhido) {
+            alert('Por favor, escolha uma forma de pagamento no final da tela!');
+            return;
+        }
+
+        // Construindo a mensagem
+        let textoPedido = `Olá! Quero fazer um pedido na *Donna Nicoli* 🍝\n\n`;
+
+        // Bloco de Pratos Prontos
+        if (temPratoPronto) {
+            textoPedido += `🍽️ *PRATOS PRONTOS:*\n`;
+            pratosEscolhidos.forEach(prato => { textoPedido += `- ${prato}\n`; });
+            textoPedido += `\n`;
+        }
+
+        // Bloco do Monte o Seu
+        if (querMonteOSeu) {
+            textoPedido += `👩‍🍳 *MONTE O SEU:*\n`;
+            textoPedido += `🍲 *Massa:* ${massaEscolhida.value}\n`;
+            textoPedido += `🍅 *Molho:* ${molhoEscolhido.value}\n`;
+            textoPedido += `🥓 *Adicionais:* ${adicionaisEscolhidos.length > 0 ? adicionaisEscolhidos.join(', ') : 'Nenhum'}\n\n`;
+        }
         
+        // Bloco de Bebidas
+        if (temBebida) {
+            textoPedido += `🥤 *BEBIDAS:*\n`;
+            bebidasEscolhidas.forEach(bebida => { textoPedido += `- ${bebida}\n`; });
+            textoPedido += `\n`;
+        }
+
+        // Total e Pagamento
+        textoPedido += `💰 *Total do pedido: ${totalPedido.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}*\n`;
         textoPedido += `💳 *Forma de Pagamento:* ${pagamentoEscolhido.value}\n`;
         if (pagamentoEscolhido.value === 'Dinheiro' && inputTroco && inputTroco.value.trim() !== '') {
             textoPedido += `   *(Precisa de troco para R$ ${inputTroco.value})*\n`;
@@ -126,21 +139,3 @@ if (btnFinalizar) {
         window.open(`https://wa.me/${WHATSAPP_NUMERO}?text=${textoCodificado}`, '_blank');
     });
 }
-
-// ==========================================
-// ENVIO DE PEDIDO RÁPIDO: "PRATOS DA CASA" E "PROMOÇÕES"
-// ==========================================
-document.querySelectorAll('.btn-pedir-prato').forEach(botao => {
-    botao.addEventListener('click', (evento) => {
-        const nomePrato = evento.target.dataset.nome;
-        const precoPrato = parseFloat(evento.target.dataset.preco);
-
-        let textoPedidoRapido = `Olá! Quero pedir um prato pronto na *Donna Nicoli* 🍝\n\n`;
-        textoPedidoRapido += `🍽️ *Prato:* ${nomePrato}\n`;
-        textoPedidoRapido += `💰 *Valor:* ${precoPrato.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}\n\n`;
-        textoPedidoRapido += `Aguardo a confirmação para passar o endereço e a forma de pagamento!`;
-
-        const textoCodificadoRapido = encodeURIComponent(textoPedidoRapido);
-        window.open(`https://wa.me/${WHATSAPP_NUMERO}?text=${textoCodificadoRapido}`, '_blank');
-    });
-});
