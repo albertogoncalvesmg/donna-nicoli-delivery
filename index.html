@@ -172,31 +172,37 @@
                             1. Escolha sua Massa (Obrigatório)
                         </div>
                         <div class="card-body p-2">
+                            <!-- Espaguete -->
                             <div class="form-check mb-2 d-flex align-items-center">
-                                <input class="form-check-input input-massa me-3" type="radio" name="massa" id="espaguete" value="Espaguete" required>
+                                <input class="form-check-input input-massa me-3" type="radio" name="massa" id="espaguete" value="Espaguete" data-preco="19.90" required>
                                 <label class="form-check-label custom-label-box w-100 d-flex align-items-center justify-content-between p-2" for="espaguete">
                                     <div class="d-flex align-items-center">
-                                        <img src="img/thumb-massa-espaguete.jpg" alt="Espaguete" class="rounded-circle thumb-img me-3 shadow-sm">
+                                        <img src="img/thumb-espaguete.jpg" alt="Espaguete" class="rounded-circle thumb-img me-3 shadow-sm">
                                         <span class="fw-bold">Espaguete</span>
                                     </div>
+                                    <span class="text-success fw-bold">R$ 19,90</span>
                                 </label>
                             </div>
+                            <!-- Fettuccine -->
                             <div class="form-check mb-2 d-flex align-items-center">
-                                <input class="form-check-input input-massa me-3" type="radio" name="massa" id="fettuccine" value="Macarrão Fettuccine" required>
+                                <input class="form-check-input input-massa me-3" type="radio" name="massa" id="fettuccine" value="Macarrão Fettuccine" data-preco="19.90">
                                 <label class="form-check-label custom-label-box w-100 d-flex align-items-center justify-content-between p-2" for="fettuccine">
                                     <div class="d-flex align-items-center">
-                                        <img src="img/thumb-massa-fettuccini.jpg" alt="Fettuccine" class="rounded-circle thumb-img me-3 shadow-sm">
+                                        <img src="img/thumb-fettuccine.jpg" alt="Fettuccine" class="rounded-circle thumb-img me-3 shadow-sm">
                                         <span class="fw-bold">Macarrão Fettuccine</span>
                                     </div>
+                                    <span class="text-success fw-bold">R$ 19,90</span>
                                 </label>
                             </div>
+                            <!-- Penne -->
                             <div class="form-check mb-2 d-flex align-items-center">
-                                <input class="form-check-input input-massa me-3" type="radio" name="massa" id="penne" value="Macarrão Penne">
+                                <input class="form-check-input input-massa me-3" type="radio" name="massa" id="penne" value="Macarrão Penne" data-preco="19.90">
                                 <label class="form-check-label custom-label-box w-100 d-flex align-items-center justify-content-between p-2" for="penne">
                                     <div class="d-flex align-items-center">
                                         <img src="img/thumb-penne.jpg" alt="Penne" class="rounded-circle thumb-img me-3 shadow-sm">
                                         <span class="fw-bold">Macarrão Penne</span>
                                     </div>
+                                    <span class="text-success fw-bold">R$ 19,90</span>
                                 </label>
                             </div>
                         </div>
@@ -308,7 +314,27 @@
                                     </div>
                                     <span class="fw-bold">+ R$ 3,00</span>
                                 </label>
-                        </div>
+                            </div>
+                            <div class="form-check mb-2 d-flex align-items-center">
+                                <input class="form-check-input input-adicional me-3" type="checkbox" id="add-molhobolonhesa" value="Molho a Bolonhesa" data-preco="4.50">
+                                <label class="form-check-label custom-label-box w-100 d-flex align-items-center justify-content-between p-2" for="add-batatapalha">
+                                    <div class="d-flex align-items-center">
+                                        <img src="img/thumb-molho-bolonhesa.jpg" alt="Molho a Bolonhesa" class="rounded-circle thumb-img me-3 shadow-sm">
+                                        <span>Molho a Bolonhesa 🍝🍅</span>
+                                    </div>
+                                    <span class="fw-bold">+ R$ 4,50</span>
+                                </label>
+                            </div>
+                            <div class="form-check mb-2 d-flex align-items-center">
+                                <input class="form-check-input input-adicional me-3" type="checkbox" id="add-molhosugo" value="Molho Sugo" data-preco="3.00">
+                                <label class="form-check-label custom-label-box w-100 d-flex align-items-center justify-content-between p-2" for="add-batatapalha">
+                                    <div class="d-flex align-items-center">
+                                        <img src="img/thumb-molho-sugo.jpg" alt="Molho a Bolonhesa" class="rounded-circle thumb-img me-3 shadow-sm">
+                                        <span>Molho Sugo 🍝🍅</span>
+                                    </div>
+                                    <span class="fw-bold">+ R$ 3,00</span>
+                                </label>
+                            </div>
                     </div>
 
                     <!-- Passo 4: Bebidas -->
